@@ -49,7 +49,6 @@ public class Sistema {
             adcionarCandidato(vetor_aux);
 
         }
-
     }
 
     public void adcionarCandidato(String[] vetor_aux){
@@ -75,7 +74,6 @@ public class Sistema {
 
         int habilidade_maior=0;
         ArrayList<String> nome_candidato = new ArrayList<>();
-        String candidato = null;
         int maior;
 
         for (Candidato candidato_loop : candidatos) {
@@ -88,7 +86,6 @@ public class Sistema {
                 habilidade_maior = maior;
 
             }
-
         }
 
         for (Candidato candidato_loop : candidatos) {
@@ -100,10 +97,78 @@ public class Sistema {
                 nome_candidato.add(candidato_loop.getNome());
 
             }
-
         }
 
         return nome_candidato;
+
+    }
+
+    public ArrayList<String> melhorCandidato2(int opcao1, int opcao2){
+
+        int habilidade_maior=0;
+        ArrayList<String> nome_candidato1 = new ArrayList<>();
+        ArrayList<String> nome_candidato2 = new ArrayList<>();
+        ArrayList<String> candidato;
+        int maior;
+
+        for (Candidato candidato_loop : candidatos) {
+
+            int[] habilidade = candidato_loop.getHabilidades();
+            maior = habilidade[opcao1 - 1];
+
+            if (habilidade_maior < maior) {
+
+                habilidade_maior = maior;
+
+            }
+        }
+
+        for (Candidato candidato_loop : candidatos) {
+
+            int[] habilidade = candidato_loop.getHabilidades();
+
+            if(habilidade[opcao1-1] == habilidade_maior){
+
+                nome_candidato1.add(candidato_loop.getNome());
+
+            }
+        }
+
+        if(nome_candidato1.size() > 1){
+
+            habilidade_maior=0;
+
+            for (Candidato candidato_loop : candidatos) {
+
+                if(nome_candidato1.contains(candidato_loop.getNome())) {
+
+                    int[] habilidade = candidato_loop.getHabilidades();
+                    maior = habilidade[opcao2 - 1];
+
+                    if (habilidade_maior < maior) {
+
+                        habilidade_maior = maior;
+
+                    }
+                }
+            }
+
+            for (Candidato candidato_loop : candidatos) {
+
+                int[] habilidade = candidato_loop.getHabilidades();
+
+                if(habilidade[opcao2-1] == habilidade_maior && nome_candidato1.contains(candidato_loop.getNome())){
+
+                    nome_candidato2.add(candidato_loop.getNome());
+
+                }
+            }
+        }
+
+        candidato = nome_candidato2;
+        candidato.retainAll(nome_candidato1);
+
+        return candidato;
 
     }
 
