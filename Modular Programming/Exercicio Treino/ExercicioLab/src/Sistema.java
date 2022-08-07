@@ -72,67 +72,21 @@ public class Sistema {
 
     public ArrayList<String> melhorCandidato1(int opcao){
 
-        int habilidade_maior=0;
-        ArrayList<String> nome_candidato = new ArrayList<>();
-        int maior;
+        int habilidade_maior = calcularMaior(opcao-1);
 
-        for (Candidato candidato_loop : candidatos) {
-
-            int[] habilidade = candidato_loop.getHabilidades();
-            maior = habilidade[opcao - 1];
-
-            if (habilidade_maior < maior) {
-
-                habilidade_maior = maior;
-
-            }
-        }
-
-        for (Candidato candidato_loop : candidatos) {
-
-            int[] habilidade = candidato_loop.getHabilidades();
-
-            if(habilidade[opcao-1] == habilidade_maior){
-
-                nome_candidato.add(candidato_loop.getNome());
-
-            }
-        }
-
-        return nome_candidato;
+        return nomeCandidato(habilidade_maior, opcao-1);
 
     }
 
     public ArrayList<String> melhorCandidato2(int opcao1, int opcao2){
 
-        int habilidade_maior=0;
-        ArrayList<String> nome_candidato1 = new ArrayList<>();
-        ArrayList<String> nome_candidato2 = new ArrayList<>();
+        ArrayList<String> nome_candidato2 = null;
         ArrayList<String> candidato;
-        int maior;
+        int numero_maior;
 
-        for (Candidato candidato_loop : candidatos) {
+        int habilidade_maior = calcularMaior(opcao1-1);
 
-            int[] habilidade = candidato_loop.getHabilidades();
-            maior = habilidade[opcao1 - 1];
-
-            if (habilidade_maior < maior) {
-
-                habilidade_maior = maior;
-
-            }
-        }
-
-        for (Candidato candidato_loop : candidatos) {
-
-            int[] habilidade = candidato_loop.getHabilidades();
-
-            if(habilidade[opcao1-1] == habilidade_maior){
-
-                nome_candidato1.add(candidato_loop.getNome());
-
-            }
-        }
+        ArrayList<String> nome_candidato1 = nomeCandidato(habilidade_maior, opcao1-1);
 
         if(nome_candidato1.size() > 1){
 
@@ -143,26 +97,18 @@ public class Sistema {
                 if(nome_candidato1.contains(candidato_loop.getNome())) {
 
                     int[] habilidade = candidato_loop.getHabilidades();
-                    maior = habilidade[opcao2 - 1];
+                    numero_maior = habilidade[opcao2 - 1];
 
-                    if (habilidade_maior < maior) {
+                    if (habilidade_maior < numero_maior) {
 
-                        habilidade_maior = maior;
+                        habilidade_maior = numero_maior;
 
                     }
                 }
             }
 
-            for (Candidato candidato_loop : candidatos) {
+            nome_candidato2 = nomeCandidato(habilidade_maior, opcao2-1);
 
-                int[] habilidade = candidato_loop.getHabilidades();
-
-                if(habilidade[opcao2-1] == habilidade_maior && nome_candidato1.contains(candidato_loop.getNome())){
-
-                    nome_candidato2.add(candidato_loop.getNome());
-
-                }
-            }
         }
 
         candidato = nome_candidato2;
@@ -172,5 +118,111 @@ public class Sistema {
 
     }
 
+    public ArrayList<String> melhorCandidato3(){
+
+        ArrayList<String> nome_candidato = new ArrayList<>();
+        ArrayList<String> arrayAuxiliar = new ArrayList<>();
+        ArrayList<String> candidato;
+        int maior_repetido=0;
+
+        for(int i=0; i<tecnologias.size(); i++){
+
+            int habilidade_maior = calcularMaior(i);
+            candidato = nomeCandidato(habilidade_maior, i);
+            nome_candidato.addAll(candidato);
+
+        }
+
+        for(int i=0; i<nome_candidato.size(); i++){
+
+            int repetiu=0;
+
+            for (String nome : nome_candidato) {
+
+                if(nome.equals(nome_candidato.get(i))){
+
+                    repetiu++;
+
+                }
+
+            }
+
+            if(maior_repetido<repetiu){
+
+                maior_repetido=repetiu;
+
+            }
+
+        }
+
+        for(int i=0; i<nome_candidato.size(); i++){
+
+            int repetiu=0;
+
+            for (String nome : nome_candidato) {
+
+                if(nome.equals(nome_candidato.get(i))){
+
+                    repetiu++;
+
+                }
+
+            }
+
+            if(maior_repetido==repetiu){
+
+                if(!arrayAuxiliar.contains(nome_candidato.get(i))) {
+                    arrayAuxiliar.add(nome_candidato.get(i));
+                }
+
+            }
+
+        }
+
+
+        nome_candidato = arrayAuxiliar;
+
+
+        return nome_candidato;
+    }
+
+    private int calcularMaior(int i){
+
+        int habilidade_maior=0;
+        int numero_maior;
+
+        for (Candidato candidato_loop : candidatos) {
+
+            int[] habilidade = candidato_loop.getHabilidades();
+            numero_maior = habilidade[i];
+
+            if (habilidade_maior < numero_maior) {
+
+                habilidade_maior = numero_maior;
+
+            }
+        }
+
+        return habilidade_maior;
+    }
+
+    private ArrayList<String> nomeCandidato(int habilidade_maior, int i){
+
+        ArrayList<String> nome_candidato = new ArrayList<>();
+
+        for (Candidato candidato_loop : candidatos) {
+
+            int[] habilidade = candidato_loop.getHabilidades();
+
+            if(habilidade[i] == habilidade_maior){
+
+                nome_candidato.add(candidato_loop.getNome());
+
+            }
+        }
+
+        return nome_candidato;
+
+    }
 
 }
