@@ -2,9 +2,9 @@ import javax.management.InvalidAttributeValueException;
 
 public class Data {
 
-    private int dia;
-    private int mes;
-    private int ano;
+    private final int dia;
+    private final int mes;
+    private final int ano;
     private static final int[] MAX_DIA = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     private static final int[] DIAS_SEMANA = {1, 2, 3, 4, 5, 6, 7};
 
@@ -21,15 +21,6 @@ public class Data {
     }
 
     //Metodos get
-    public int getDia() {
-        return dia;
-    }
-    public int getMes() {
-        return mes;
-    }
-    public int getAno() {
-        return ano;
-    }
     private int getMAX_DIA(int mes){
         return MAX_DIA[mes-1];
     }
@@ -60,11 +51,11 @@ public class Data {
 
         while(dias!=0){
 
-            for(int i=0; i<DIAS_SEMANA.length; i++){
+            for (int dia : DIAS_SEMANA) {
 
-                dia_semana = DIAS_SEMANA[i];
+                dia_semana = dia;
                 dias--;
-                if(dias==0){
+                if (dias == 0) {
                     break;
                 }
 
@@ -72,35 +63,14 @@ public class Data {
 
         }
 
-        switch (dia_semana){
-
-            case 1:
-                System.out.println("Domingo");
-                break;
-
-            case 2:
-                System.out.println("Segunda");
-                break;
-
-            case 3:
-                System.out.println("Terca");
-                break;
-
-            case 4:
-                System.out.println("Quarta");
-                break;
-
-            case 5:
-                System.out.println("Quinta");
-                break;
-
-            case 6:
-                System.out.println("Sexta");
-                break;
-
-            case 7:
-                System.out.println("Sabado");
-                break;
+        switch (dia_semana) {
+            case 1 -> System.out.println("Domingo");
+            case 2 -> System.out.println("Segunda");
+            case 3 -> System.out.println("Terca");
+            case 4 -> System.out.println("Quarta");
+            case 5 -> System.out.println("Quinta");
+            case 6 -> System.out.println("Sexta");
+            case 7 -> System.out.println("Sabado");
         }
     }
 
