@@ -2,6 +2,8 @@ public class Microondas{
 
     private int minutos = 0;
     private int segundos = 0;
+    private final static int MAXIMO_MINUTO = 59;
+    private final static int MAXIMO_SEGUNDO = 59;
     private boolean ligado;
     private Timer_Microondas timer_microondas;
     private final Porta porta = new Porta();
@@ -10,10 +12,21 @@ public class Microondas{
 
     //Metodos set
     public void setMinutos(int minutos) {
-        this.minutos = minutos;
+        if(minutos>=getMaximoMinuto()){
+            this.minutos = minutos;
+        }
+        else throw new RuntimeException("Impossivel deixar 1 hora!");
+
     }
     public void setSegundos(int segundos) {
-        this.segundos = segundos;
+        if(segundos>=getMaximoSegundo()){
+            this.segundos = segundos;
+        }
+        else{
+            this.segundos=0;
+            this.minutos=1;
+        }
+
     }
     public void setLigado(boolean ligado) {
         this.ligado = ligado;
@@ -28,6 +41,12 @@ public class Microondas{
     }
     public boolean getLigado(){ return ligado; }
     public boolean getPauseTimer(){ return timer_microondas.getPausado(); }
+    private static int getMaximoMinuto() {
+        return MAXIMO_MINUTO;
+    }
+    private static int getMaximoSegundo() {
+        return MAXIMO_SEGUNDO;
+    }
 
     //Metodos Microondas
     public void ligarMicrioondas(){

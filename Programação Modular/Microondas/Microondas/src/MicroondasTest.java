@@ -118,8 +118,15 @@ public class MicroondasTest{
             microondas.escolherTempoMicroondas(0,10);
             microondas.ligarMicrioondas();
             assertTrue(microondas.getLigado());
-            microondas.atualizarTempoMicroondas(0,0);
-            microondas.verificarDesligarQuandoTempoZerar();
+
+            for(int i=0; i<10; i++){
+
+                int segundos = microondas.getSegundos()-1;
+                microondas.setSegundos(segundos);
+                microondas.verificarDesligarQuandoTempoZerar();
+
+            }
+
             assertEquals(0,microondas.getMinutos());
             assertEquals(0,microondas.getSegundos());
             assertFalse(microondas.getLigado());
@@ -129,6 +136,5 @@ public class MicroondasTest{
         }
 
     }
-
 
 }
